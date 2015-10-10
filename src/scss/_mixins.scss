@@ -1,0 +1,126 @@
+
+
+@mixin flat-btn($name, $bg, $color, $border-color, $border-size: $flat-btn-border-size) {
+  &.flat-btn-#{$name} {
+    background-color: $bg;
+    color: $color;
+    border-bottom: $border-size solid $border-color;
+
+    $offset: -$border-size;
+    box-shadow: inset 0 $offset $border-color;
+  }
+}
+
+
+
+
+@mixin floating-box-arrow($dir, $color: transparent) {
+  border-#{$dir}: solid $floating-box-arrow-size $color;
+}
+
+
+
+@mixin floating-box-color($bg-color, $font-color) {
+  background: $bg-color;
+  color: $font-color;
+
+  @each $dir in top, right, bottom, left {
+    &.floating-box-#{$dir}:before {
+      @include floating-box-arrow($dir, $bg-color);
+    }
+  }
+}
+
+
+
+
+@mixin hamburger-transition($deg, $x, $y) {
+  transform: rotateZ(#{$deg}deg) translate(#{$x}, #{$y});
+}
+
+@mixin hamburger-btn-colors($normal: $hamburger-line-color, $hover: $hamburger-line-color) {
+  [class$='bars'],
+  [class$='bars']:before,
+  [class$='bars']:after {
+    background-color: $normal;
+  }
+
+  &:hover {
+    [class$='bars'],
+    [class$='bars']:before,
+    [class$='bars']:after {
+      background-color: $hover;
+    }
+  }
+}
+
+@mixin hamburger-line {
+  position: absolute;
+  content: '';
+  background-color: $hamburger-line-color;
+  transition-duration: $button-transition-time;
+}
+
+@mixin hamburger-size($btn-width, $btn-height, $line-width, $line-height, $line-gutter, $line-offset) {
+
+  .left-bars,
+  .right-bars {
+    width: $line-width / 2;
+    height: $line-height;
+
+    &:before,
+    &:after {
+      width: $line-width / 2;
+      height: $line-height;
+    }
+
+    &:before {
+      top: -#{$line-gutter};
+    }
+
+    &:after {
+      top: $line-gutter;
+    }
+  }
+
+  .left-bars {
+    left: 50%;
+  }
+
+  .right-bars {
+    right: 50%;
+  }
+
+
+  .help-text-bottom {
+    top: $btn-height + 5px;
+  }
+
+  .help-text-top {
+    bottom: $btn-height + 5px;
+  }
+
+  &.hamburger-open {
+
+    .left-bars {
+      &:before {
+        @include hamburger-transition(45, $line-offset, 2px);
+      }
+
+      &:after {
+        @include hamburger-transition(-45, $line-offset, -2px);
+      }
+    }
+
+    .right-bars {
+      &:before {
+        @include hamburger-transition(-45, -#{$line-offset}, 2px);
+      }
+
+      &:after {
+        @include hamburger-transition(45, -#{$line-offset}, -2px);
+      }
+    }
+
+  }
+}

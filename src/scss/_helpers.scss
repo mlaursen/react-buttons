@@ -1,0 +1,76 @@
+
+.floating-box {
+  padding: $floating-box-padding;
+  box-shadow: $floating-box-shadow;
+
+  &:before {
+    content: '';
+    width: 0;
+    height: 0;
+  }
+
+  &.floating-box-top,
+  &.floating-box-top:before,
+  &.floating-box-bottom,
+  &.floating-box-bottom:before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.floating-box-top:before,
+  &.floating-box-bottom:before {
+    @include floating-box-arrow('left');
+    @include floating-box-arrow('right');
+  }
+
+  &.floating-box-top {
+    bottom: $floating-box-top-offset;
+
+    &:before {
+      bottom: -$floating-box-arrow-size;
+    }
+  }
+
+  &.floating-box-bottom {
+    top: $floating-box-bottom-offset;
+
+    &:before {
+      top: -$floating-box-arrow-size;
+    }
+  }
+
+  &.floating-box-right,
+  &.floating-box-left {
+    top: 50%;
+    transform: translateY(-50%);
+
+    &:before {
+      top: $floating-box-arrow-size;
+      @include floating-box-arrow('top');
+      @include floating-box-arrow('bottom');
+    }
+  }
+
+  &.floating-box-right {
+    left: $floating-box-right-offset;
+
+    &:before {
+      left: -$floating-box-arrow-size;
+    }
+  }
+
+  &.floating-box-left {
+    right: $floating-box-right-offset;
+
+    &:before {
+      right: -$floating-box-arrow-size;
+    }
+  }
+}
+
+
+.floating-box,
+.floating-box:before {
+  position: absolute;
+  z-index: $floating-box-z-index;
+}

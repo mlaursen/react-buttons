@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+@import "../../src/scss/react-buttons";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#app, .container {
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  background-color: #3498db;
+  padding: 1.5em;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+
+@media (min-width: 768px) {
+  main {
+    width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  main {
+    width: 940px;
+  }
+}
+
+@media (min-width: 1200px) {
+  main {
+    width: 1140px;
+  }
+}
+
+main {
+  margin-left: auto;
+  margin-right: auto;
+  
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+}
+
+footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 2em;
+  
+  > a {
+    color: #4a4a4a;
+
+    .fa {
+      font-size: 4em;
+    }
+  }
+}
+

@@ -1,0 +1,99 @@
+.icon-text-btn {
+  .fa + span,
+  span + .fa {
+    margin-left: $icon-text-btn-margin;
+  }
+}
+
+
+.flat-btn {
+	position: relative;
+  font-family: $flat-btn-font;
+  padding: $flat-btn-padding;
+  border: 0;
+
+  &:active,
+  &.active {
+    top: $flat-btn-active-offset;
+    outline: none;
+    box-shadow: none;
+  }
+
+  @each $btn in $flat-btn-classes {
+    @include flat-btn(nth($btn, 1), nth($btn, 2), nth($btn, 3), nth($btn, 4));
+  }
+}
+
+.icon-btn {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  padding: $icon-btn-padding;
+  font-size: $icon-btn-font-size;
+
+  > [class^='help-text'] {
+    @extend .floating-box;
+
+    font-family: $help-text-font;
+    font-size: $help-text-font-size;
+    white-space: pre;
+
+    @include floating-box-color($help-text-background-color, $help-text-color);
+  }
+
+  @each $dir in top, right, bottom, left {
+    > .help-text-#{$dir} {
+      @extend .floating-box-#{$dir};
+    }
+  }
+}
+
+
+
+
+
+
+.hamburger-btn {
+  position: relative;
+  padding: $hamburger-btn-padding;
+
+  @include hamburger-size(
+    $hamburger-btn-width,
+    $hamburger-btn-height,
+    $hamburger-line-width,
+    $hamburger-line-height,
+    $hamburger-line-gutter,
+    $hamburger-line-offset
+  );
+
+  &.hamburger-btn-lg {
+    @include hamburger-size(
+      $hamburger-lg-btn-width,
+      $hamburger-lg-btn-height,
+      $hamburger-lg-line-width,
+      $hamburger-lg-line-height,
+      $hamburger-lg-line-gutter,
+      $hamburger-lg-line-offset
+    );
+  }
+
+  .left-bars,
+  .right-bars {
+    top: 50%;
+    @include hamburger-line();
+
+    &:before,
+    &:after {
+      left: 0;
+
+      @include hamburger-line();
+    }
+  }
+
+  &.hamburger-open {
+    .left-bars,
+    .right-bars {
+      background: transparent !important;
+    }
+  }
+}
