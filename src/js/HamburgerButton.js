@@ -27,14 +27,16 @@ export default class HamburgerButton extends Component {
 
   render() {
     const className = classnames('hamburger-btn', this.props.className, {
-      'hamburger-open': this.props.isOpen,
+      'active': this.props.isOpen,
       'hamburger-btn-lg': this.props.isLarge,
     });
 
     return (
       <IconButton {...this.props} className={className}>
-        <div className="left-bars" />
-        <div className="right-bars" />
+        <div className="bars-wrapper">
+          <div className="left-bars" />
+          <div className="right-bars" />
+        </div>
       </IconButton>
     );
   }

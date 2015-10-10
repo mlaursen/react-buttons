@@ -3,7 +3,7 @@ $button-transition-time: .15s !default;
 
 $icon-text-btn-margin: 0.5em !default;
 
-$icon-btn-padding: 1em !default;
+$icon-btn-padding: .5em !default;
 $icon-btn-font-size: 24px !default;
 
 $btn-text-color: #ecf0f1 !default; // white
@@ -40,8 +40,8 @@ $floating-btn-z-index: $floating-box-z-index - 1 !default;
 $floating-btn-right: 1em !default;
 $floating-btn-bottom: 1em !default;
 $floating-btn-border-radius: 50% !default;
-$floating-btn-font-size: 2.5em !default;
-$floating-btn-icon-padding: .4em !default;
+$floating-btn-font-size: 2 * $icon-btn-font-size !default;
+$floating-btn-size: $floating-btn-font-size * 1.75;
 $floating-btn-box-shadow: 0 0 4px rgba(0, 0, 0, .15), 0 2px 6px rgba(0, 0, 0, .66) !default;
 $floating-btn-classes: (
 	('default', $btn-text-color, $btn-default-color),
@@ -65,21 +65,6 @@ $flat-btn-classes: (
 
 
 // Hamburger Button
-$hamburger-line-color: #000 !default;
-$hamburger-btn-padding: calc(#{$icon-btn-padding} + #{$icon-btn-font-size / 2});
-
-$hamburger-line-height: 3px !default;
-$hamburger-line-width: 20px !default;
-$hamburger-line-gutter: $hamburger-line-height * 2 !default;
-$hamburger-btn-gutter: 3px !default;
-$hamburger-btn-width: 25px !default;
-$hamburger-btn-height: $hamburger-line-gutter * 3 + $hamburger-btn-gutter !default;
-$hamburger-line-offset: ceil(($hamburger-btn-width - $hamburger-line-width) / 2) !default;
-
-$hamburger-lg-line-height: 4px !default;
-$hamburger-lg-line-width: 30px !default;
-$hamburger-lg-line-gutter: $hamburger-lg-line-height * 2.5 !default;
-$hamburger-lg-btn-gutter: 4px !default;
-$hamburger-lg-btn-width: 40px !default;
-$hamburger-lg-btn-height: $hamburger-lg-line-gutter * 3 + $hamburger-lg-btn-gutter !default;
-$hamburger-lg-line-offset: (($hamburger-lg-btn-width - $hamburger-lg-line-width) / 2) !default;
+$hamburger-btn-line-color: #000 !default;
+$hamburger-btn-line-height: 2px !default;
+$hamburger-btn-lg-scale: 1.75 !default;

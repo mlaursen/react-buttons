@@ -1,6 +1,9 @@
 .icon-text-btn {
-  .fa + span,
-  span + .fa {
+  display: flex;
+  align-items: center;
+
+  > i + span,
+  > span + i {
     margin-left: $icon-text-btn-margin;
   }
 }
@@ -31,6 +34,10 @@
   padding: $icon-btn-padding;
   font-size: $icon-btn-font-size;
 
+  &:focus:not(.tab-focus) {
+    outline: none;
+  }
+
   > [class^='help-text'] {
     @extend .floating-box;
 
@@ -55,45 +62,76 @@
 
 .hamburger-btn {
   position: relative;
-  padding: $hamburger-btn-padding;
+  padding: $icon-btn-padding;
 
-  @include hamburger-size(
-    $hamburger-btn-width,
-    $hamburger-btn-height,
-    $hamburger-line-width,
-    $hamburger-line-height,
-    $hamburger-line-gutter,
-    $hamburger-line-offset
-  );
-
-  &.hamburger-btn-lg {
-    @include hamburger-size(
-      $hamburger-lg-btn-width,
-      $hamburger-lg-btn-height,
-      $hamburger-lg-line-width,
-      $hamburger-lg-line-height,
-      $hamburger-lg-line-gutter,
-      $hamburger-lg-line-offset
-    );
+  .bars-wrapper {
+    position: relative;
+    width: $icon-btn-font-size;
+    height: $icon-btn-font-size;
   }
 
   .left-bars,
-  .right-bars {
-    top: 50%;
-    @include hamburger-line();
+  .left-bars:before,
+  .left-bars:after,
+  .right-bars,
+  .right-bars:before,
+  .right-bars:after {
+    content: '';
+    position: absolute;
+    width: $icon-btn-font-size / 2;
+    height: $hamburger-btn-line-height;
 
-    &:before,
-    &:after {
-      left: 0;
+    background: $hamburger-btn-line-color;
+    transition: transform $button-transition-time, background $button-transition-time;
+  }
 
-      @include hamburger-line();
+  .left-bars,
+  .left-bars:before,
+  .left-bars:after {
+    left: 0;
+  }
+
+  .right-bars,
+  .right-bars:before,
+  .right-bars:after {
+    right: 0;
+  }
+
+  @include hamburger-position();
+
+  &.active {
+    .left-bars, .right-bars {
+      background: transparent;
     }
   }
 
-  &.hamburger-open {
-    .left-bars,
-    .right-bars {
-      background: transparent !important;
+  &.hamburger-btn-lg {
+    $size: $icon-btn-font-size * $hamburger-btn-lg-scale;
+    $line-height: $hamburger-btn-line-height * $hamburger-btn-lg-scale;
+    @include hamburger-size($size, $line-height);
+    @include hamburger-position($size, $line-height);
+  }
+}
+
+
+
+.floating-btn {
+  position: fixed;
+  right: $floating-btn-right;
+  bottom: $floating-btn-bottom;
+
+  padding: 0;
+  width: $floating-btn-size;
+  height: $floating-btn-size;
+
+  border-radius: $floating-btn-border-radius;
+  font-size: $floating-btn-font-size;
+  box-shadow: $floating-btn-box-shadow;
+
+  @each $btn in $floating-btn-classes {
+    &.floating-btn-#{nth($btn, 1)} {
+      color: nth($btn, 2);
+      background-color: nth($btn, 3);
     }
   }
 }

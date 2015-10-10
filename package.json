@@ -4,6 +4,8 @@
   "description": "A few common buttons with css and helpers.",
   "main": "dist/index.js",
   "scripts": {
+    "start": "gulp serve",
+    "build": "gulp dist",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'"
   },
   "repository": {
@@ -38,7 +40,9 @@
     "gulp-postcss": "^6.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.4",
+    "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.4.1",
+    "gulp-util": "^3.0.6",
     "react": "^0.14.0",
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-dom": "^0.14.0",

@@ -17,11 +17,9 @@ html, body {
 #app, .container {
   height: 100%;
   min-height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
-body {
+.container {
   display: flex;
   flex-direction: column;
 }
@@ -38,34 +36,41 @@ header {
 
 
 @media (min-width: 768px) {
-  main {
+  main .buttons-container {
     width: 720px;
   }
 }
 
 @media (min-width: 992px) {
-  main {
+  main .buttons-container {
     width: 940px;
   }
 }
 
 @media (min-width: 1200px) {
-  main {
+  main .buttons-container {
     width: 1140px;
   }
 }
 
 main {
-  margin-left: auto;
-  margin-right: auto;
-  
-  display: flex;
   flex-grow: 1;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
   
+  .buttons-container {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    
+    > a,
+    > button {
+      margin: 2em;
+    }
+  }
 }
 
 footer {
@@ -83,3 +88,7 @@ footer {
   }
 }
 
+
+.fancy-dancy {
+  @include hamburger-color(#2c3e50, #ecf0f1);
+}

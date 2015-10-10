@@ -33,94 +33,74 @@
 
 
 
-
-@mixin hamburger-transition($deg, $x, $y) {
-  transform: rotateZ(#{$deg}deg) translate(#{$x}, #{$y});
-}
-
-@mixin hamburger-btn-colors($normal: $hamburger-line-color, $hover: $hamburger-line-color) {
-  [class$='bars'],
-  [class$='bars']:before,
-  [class$='bars']:after {
-    background-color: $normal;
-  }
-
-  &:hover {
-    [class$='bars'],
-    [class$='bars']:before,
-    [class$='bars']:after {
-      background-color: $hover;
-    }
-  }
-}
-
-@mixin hamburger-line {
-  position: absolute;
-  content: '';
-  background-color: $hamburger-line-color;
-  transition-duration: $button-transition-time;
-}
-
-@mixin hamburger-size($btn-width, $btn-height, $line-width, $line-height, $line-gutter, $line-offset) {
+@mixin hamburger-color($bg: $hamburger-btn-bg-color, $color: $hamburger-btn-line-color) {
+  background: $bg;
 
   .left-bars,
-  .right-bars {
-    width: $line-width / 2;
+  .left-bars:before,
+  .left-bars:after,
+  .right-bars,
+  .right-bars:before,
+  .right-bars:after {
+    background: $color;
+  }
+}
+
+@mixin hamburger-size($size: $icon-btn-font-size, $line-height: $hamburger-btn-line-height) {
+  .bars-wrapper {
+    width: $size;
+    height: $size;
+  }
+
+  .left-bars,
+  .left-bars:before,
+  .left-bars:after,
+  .right-bars,
+  .right-bars:before,
+  .right-bars:after {
+    width: $size / 2;
     height: $line-height;
-
-    &:before,
-    &:after {
-      width: $line-width / 2;
-      height: $line-height;
-    }
-
-    &:before {
-      top: -#{$line-gutter};
-    }
-
-    &:after {
-      top: $line-gutter;
-    }
   }
+}
 
-  .left-bars {
-    left: 50%;
-  }
-
+@mixin hamburger-position($size: $icon-btn-font-size, $line-height: $hamburger-btn-line-height) {
+  .left-bars,
   .right-bars {
-    right: 50%;
-  }
+    opacity: 1;
 
+    $offset: $line-height / 2;
+    $top: $size / 2 - $offset;
+    top: $top;
 
-  .help-text-bottom {
-    top: $btn-height + 5px;
-  }
-
-  .help-text-top {
-    bottom: $btn-height + 5px;
-  }
-
-  &.hamburger-open {
-
-    .left-bars {
-      &:before {
-        @include hamburger-transition(45, $line-offset, 2px);
-      }
-
-      &:after {
-        @include hamburger-transition(-45, $line-offset, -2px);
-      }
+    $total-px-taken: $size - $line-height * 3;
+    $top: $total-px-taken / 3 + $offset;
+    &:before {
+      top: -#{$top};
     }
 
-    .right-bars {
-      &:before {
-        @include hamburger-transition(-45, -#{$line-offset}, 2px);
-      }
+    &:after {
+      top: $top;
+    }
+  }
 
-      &:after {
-        @include hamburger-transition(45, -#{$line-offset}, -2px);
-      }
+  &.active {
+    $x: $line-height;
+    $y: $line-height + $line-height / 2;
+
+    .left-bars:before {
+      transform: translate3d($x, $y, 0) rotateZ(45deg);
     }
 
+    .left-bars:after {
+      transform: translate3d($x, -$y, 0) rotateZ(-45deg);
+    }
+
+    .right-bars:before {
+      transform: translate3d(-$x, $y, 0) rotateZ(-45deg);
+    }
+
+    .right-bars:after {
+      transform: translate3d(-$x, -$y, 0) rotateZ(45deg);
+    }
   }
 }

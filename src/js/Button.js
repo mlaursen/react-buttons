@@ -12,20 +12,24 @@ export default class Button extends Component {
   static propTypes = {
     iconBefore: PropTypes.bool,
     faIcon: PropTypes.string,
+    materialIcon: PropTypes.string,
     type: PropTypes.oneOf(['button', 'submit', 'reset']),
   }
 
   static defaultProps = {
     iconBefore: false,
-    faIcon: null,
-    className: null,
     onClick: (e) => { console.warn('Button with no clicky click', e.target); },
     type: 'button',
   }
 
   render() {
-    const { iconBefore, faIcon, className, ...props } = this.props;
-    const icon = faIcon && <i className={`fa fa-${faIcon}`} />;
+    const { iconBefore, faIcon, materialIcon, className, ...props } = this.props;
+    let icon = null;
+    if(faIcon) {
+      icon = <i className={`fa fa-${faIcon}`} />;
+    } else if(materialIcon) {
+      icon = <i className="material-icons">{materialIcon}</i>;
+    }
 
     return (
       <button {...props} className={classnames(className, { 'icon-text-btn': icon })}>
