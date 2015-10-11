@@ -18,7 +18,7 @@ import buffer from 'vinyl-buffer';
 const SRC = './src';
 const EXAMPLE_SRC = './example';
 const DIST = './dist';
-const EXAMPLE_DIST = './distExample';
+const EXAMPLE_DIST = './';
 const SCSS = '/scss';
 const JS   = '/js';
 
@@ -43,8 +43,8 @@ function styles(source, dist, isProd, isServer) {
       })
     ]))
     .pipe(isProd ? rename({ suffix: '.min' }) : gutil.noop())
-    .pipe(isServer ? sourcemaps.init({ loadMaps: true }) : gutil.noop())
-    .pipe(isServer ? sourcemaps.write('./') : gutil.noop())
+    .pipe(!isProd && isServer ? sourcemaps.init({ loadMaps: true }) : gutil.noop())
+    .pipe(!isProd && isServer ? sourcemaps.write('./') : gutil.noop())
     .pipe(gulp.dest(dist))
     .pipe(isServer ? browserSync.stream() : gutil.noop());
 }
@@ -95,9 +95,13 @@ function bundle(isProd) {
     })
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(sourcemaps.write('./'))
+    .pipe(isProd ? gutil.noop() : sourcemaps.init({ loadMaps: true }))
+    .pipe(isProd ? gutil.noop() : sourcemaps.write('./'))
     .pipe(isProd ? uglify() : gutil.noop())
+    .on('error', function(err) {
+      gutil.log(gutil.colors.red('ERROR'), err.message);
+      this.emit('end');
+    })
     .pipe(isProd ? rename({ suffix: '.min' }) : gutil.noop())
     .pipe(gulp.dest(EXAMPLE_DIST));
 }
@@ -107,13 +111,13 @@ gulp.task('statics:example', () => {
 });
 
 gulp.task('styles:example', () => {
-  return styles(`${EXAMPLE_SRC}${SCSS}/main.scss`, EXAMPLE_DIST, false, true);
+  return styles(`${EXAMPLE_SRC}${SCSS}/main.scss`, EXAMPLE_DIST, true, true);
 });
 gulp.task('styles-watch:example', ['styles:example']);
 
 
 gulp.task('scripts:example', () => {
-  return bundle(false);
+  return bundle(true);
 });
 gulp.task('scripts-watch:example', ['scripts:example'], browserSync.reload);
 
