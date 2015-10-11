@@ -26,7 +26,7 @@ export default class Example extends Component {
 
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.state = {
-      isHamburgerOpen: { 0: false, 1: false, 2: false, 3: false },
+      isHamburgerActive: { 0: false, 1: false, 2: false, 3: false },
       floatingBtnPropsIndex: 0,
       flatBtnPropsIndex: 0,
       iconBtnPropsIndex: 0,
@@ -34,11 +34,11 @@ export default class Example extends Component {
   }
 
   toggleHamburger = (index) => {
-    const isHamburgerOpen = Object.create(this.state.isHamburgerOpen);
+    const isHamburgerActive = Object.assign({}, this.state.isHamburgerActive);
 
-    isHamburgerOpen[index] = !isHamburgerOpen[index];
+    isHamburgerActive[index] = !isHamburgerActive[index];
 
-    this.setState({ isHamburgerOpen: isHamburgerOpen });
+    this.setState({ isHamburgerActive: isHamburgerActive });
   }
 
   _next(i, list, key) {
@@ -65,7 +65,7 @@ export default class Example extends Component {
   }
 
   render() {
-    const { isHamburgerOpen } = this.state;
+    const { isHamburgerActive } = this.state;
 
     return (
       <div className="container">
@@ -76,10 +76,10 @@ export default class Example extends Component {
             <a href="#" className="icon-text-btn"><i className="fa fa-users" />Hello, world!</a>
             <FlatButton {...FLAT_BTN_PROPS[this.state.flatBtnPropsIndex]} onClick={this.nextFlatBtn}>Click for other props</FlatButton>
             <IconButton {...ICON_BTN_PROPS[this.state.iconBtnPropsIndex]} onClick={this.nextIconBtn} />
-            <HamburgerButton isOpen={isHamburgerOpen[0]} onClick={this.toggleHamburger.bind(this, 0)} label="Boop" />
-            <HamburgerButton isOpen={isHamburgerOpen[1]} onClick={this.toggleHamburger.bind(this, 1)} isLarge={true} label="Boop" />
-            <HamburgerButton className="fancy-dancy" isOpen={isHamburgerOpen[2]} onClick={this.toggleHamburger.bind(this, 2)} label="Boop" />
-            <HamburgerButton className="fancy-dancy" isOpen={isHamburgerOpen[3]} onClick={this.toggleHamburger.bind(this, 3)} isLarge={true} label="Boop" />
+            <HamburgerButton active={isHamburgerActive[0]} onClick={this.toggleHamburger.bind(this, 0)} label="Boop" />
+            <HamburgerButton active={isHamburgerActive[1]} onClick={this.toggleHamburger.bind(this, 1)} isLarge={true} label="Boop" />
+            <HamburgerButton className="fancy-dancy" active={isHamburgerActive[2]} onClick={this.toggleHamburger.bind(this, 2)} label="Boop" />
+            <HamburgerButton className="fancy-dancy" active={isHamburgerActive[3]} onClick={this.toggleHamburger.bind(this, 3)} isLarge={true} label="Boop" />
           </div>
         </main>
         <FloatingButton {...FLOATING_BTN_PROPS[this.state.floatingBtnPropsIndex]} onClick={this.nextFloatingBtn} />
