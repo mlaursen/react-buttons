@@ -90,7 +90,7 @@ footer {
 
 
 .fancy-dancy {
-  @include hamburger-color(#2c3e50, #ecf0f1);
+  @include hamburger-color(#2c3e50, #ecf0f1, #bdc3c7);
 }
 
 @media screen and (max-width: 600px) {
