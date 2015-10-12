@@ -36,10 +36,15 @@
 @mixin hamburger-color($bg: $hamburger-btn-bg-color, $color: $hamburger-btn-line-color, $hover-color: null) {
   background: $bg;
 
-  .left-bars,
+  &:not(.active) {
+    .left-bars,
+    .right-bars {
+      background: $color;
+    }
+  }
+
   .left-bars:before,
   .left-bars:after,
-  .right-bars,
   .right-bars:before,
   .right-bars:after {
     background: $color;
