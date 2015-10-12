@@ -1,6 +1,6 @@
 {
   "name": "react-buttons",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A few common buttons with css and helpers.",
   "main": "dist/index.js",
   "scripts": {
