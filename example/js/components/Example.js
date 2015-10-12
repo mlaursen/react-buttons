@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import { Button, FlatButton, IconButton, HamburgerButton, FloatingButton } from '../../../src/js/index';
@@ -52,15 +52,15 @@ export default class Example extends Component {
     this.setState(state);
   }
 
-  nextFloatingBtn = (e) => {
+  nextFloatingBtn = () => {
     this._next(this.state.floatingBtnPropsIndex, FLOATING_BTN_PROPS, 'floating');
   }
 
-  nextFlatBtn = (e) => {
+  nextFlatBtn = () => {
     this._next(this.state.flatBtnPropsIndex, FLAT_BTN_PROPS, 'flat');
   }
 
-  nextIconBtn = (e) => {
+  nextIconBtn = () => {
     this._next(this.state.iconBtnPropsIndex, ICON_BTN_PROPS, 'icon');
   }
 
@@ -73,7 +73,7 @@ export default class Example extends Component {
         <main>
           <div className="buttons-container">
             <Button faIcon="users">Hello, World!</Button>
-            <a href="#" className="icon-text-btn"><i className="fa fa-users" />Hello, world!</a>
+            <a href="#" className="icon-text-btn"><i className="icon fa fa-users" />Hello, world!</a>
             <FlatButton {...FLAT_BTN_PROPS[this.state.flatBtnPropsIndex]} onClick={this.nextFlatBtn}>Click for other props</FlatButton>
             <IconButton {...ICON_BTN_PROPS[this.state.iconBtnPropsIndex]} onClick={this.nextIconBtn} />
             <HamburgerButton active={isHamburgerActive[0]} onClick={this.toggleHamburger.bind(this, 0)} label="Boop" />
