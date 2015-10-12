@@ -1,9 +1,14 @@
 .icon-text-btn {
-  display: flex;
-  align-items: center;
 
-  > i + span,
-  > span + i {
+  > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .icon + span,
+  span + .icon {
     margin-left: $icon-text-btn-margin;
   }
 }
