@@ -14,6 +14,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
@@ -26,9 +28,9 @@ var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
 
 var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
 
-var _classnames = require('classnames');
+var _classnames2 = require('classnames');
 
-var _classnames2 = _interopRequireDefault(_classnames);
+var _classnames3 = _interopRequireDefault(_classnames2);
 
 var Button = (function (_Component) {
   _inherits(Button, _Component);
@@ -65,7 +67,7 @@ var Button = (function (_Component) {
 
       return _react2['default'].createElement(
         'button',
-        _extends({}, props, { className: (0, _classnames2['default'])(className, { 'icon-text-btn': icon }) }),
+        _extends({}, props, { className: (0, _classnames3['default'])(className, { 'icon-text-btn': icon }) }),
         _react2['default'].createElement(
           'div',
           null,
@@ -182,7 +184,7 @@ var IconButton = (function (_Component2) {
       var isHelpTextVisible = _state.isHelpTextVisible;
 
       var buttonProps = {
-        className: (0, _classnames2['default'])('icon-btn', this.props.className, {
+        className: (0, _classnames3['default'])('icon-btn', this.props.className, {
           'tab-focus': isTabFocused
         }),
         onClick: this.handleClick,
@@ -258,10 +260,9 @@ var HamburgerButton = (function (_Component3) {
   _createClass(HamburgerButton, [{
     key: 'render',
     value: function render() {
-      var className = (0, _classnames2['default'])('hamburger-btn', this.props.className, {
-        'active': this.props.active,
-        'hamburger-btn-lg': this.props.isLarge
-      });
+      var className = (0, _classnames3['default'])('hamburger-btn', this.props.className, _defineProperty({
+        'active': this.props.active
+      }, 'hamburger-btn-' + this.props.size, this.props.size));
 
       return _react2['default'].createElement(
         IconButton,
@@ -278,19 +279,19 @@ var HamburgerButton = (function (_Component3) {
     key: 'propTypes',
     value: {
       active: _react.PropTypes.bool,
-      isLarge: _react.PropTypes.bool,
       label: _react.PropTypes.string.isRequired,
       helpPosition: _react.PropTypes.oneOf(['top', 'left', 'bottom', 'right']),
       onClick: _react.PropTypes.func,
-      className: _react.PropTypes.string
+      className: _react.PropTypes.string,
+      size: _react.PropTypes.string
     },
     enumerable: true
   }, {
     key: 'defaultProps',
     value: {
       active: false,
-      isLarge: false,
-      helpPosition: 'bottom'
+      helpPosition: 'bottom',
+      size: 'md'
     },
     enumerable: true
   }]);
@@ -321,7 +322,7 @@ var FlatButton = (function (_Component4) {
 
       var props = _objectWithoutProperties(_props2, ['className', 'color', 'active']);
 
-      var fullClassName = (0, _classnames2['default'])(className, 'flat-btn', 'flat-btn-' + color, {
+      var fullClassName = (0, _classnames3['default'])(className, 'flat-btn', 'flat-btn-' + color, {
         'active': active
       });
 
@@ -363,7 +364,7 @@ var FloatingButton = (function (_Component5) {
   _createClass(FloatingButton, [{
     key: 'render',
     value: function render() {
-      var className = (0, _classnames2['default'])(this.props.className, 'floating-btn', 'floating-btn-' + this.props.color);
+      var className = (0, _classnames3['default'])(this.props.className, 'floating-btn', 'floating-btn-' + this.props.color);
 
       return _react2['default'].createElement(IconButton, _extends({}, this.props, { className: className }));
     }

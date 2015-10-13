@@ -1,3 +1,13 @@
+// Optionally include the different type of button css
+$include-icon-text-btn: true !default;
+$include-flat-btn: true !default;
+$include-icon-btn: true !default;
+$include-floating-box: true !default;
+$include-help-text: $include-floating-box !default;
+$include-hamburger-btn: true !default;
+$include-floating-btn: true !default;
+
+
 $react-buttons-font: 'Roboto', sans-serif !default;
 $button-transition-time: .15s !default;
 
@@ -67,4 +77,6 @@ $flat-btn-classes: (
 // Hamburger Button
 $hamburger-btn-line-color: #000 !default;
 $hamburger-btn-line-height: 2px !default;
-$hamburger-btn-lg-scale: 1.75 !default;
+$hamburger-btn-size-scale: 6px !default;
+$hamburger-btn-line-scale: 0.5px !default;
+$hamburger-btn-sizes: 'sm', 'md', 'lg', 'xl';

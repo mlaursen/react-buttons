@@ -169,23 +169,23 @@ export class HamburgerButton extends Component {
 
   static propTypes = {
     active: PropTypes.bool,
-    isLarge: PropTypes.bool,
     label: PropTypes.string.isRequired,
     helpPosition: PropTypes.oneOf(['top', 'left', 'bottom', 'right']),
     onClick: PropTypes.func,
     className: PropTypes.string,
+    size: PropTypes.string,
   }
 
   static defaultProps = {
     active: false,
-    isLarge: false,
     helpPosition: 'bottom',
+    size: 'md',
   }
 
   render() {
     const className = classnames('hamburger-btn', this.props.className, {
       'active': this.props.active,
-      'hamburger-btn-lg': this.props.isLarge,
+      [`hamburger-btn-${this.props.size}`]: this.props.size,
     });
 
     return (

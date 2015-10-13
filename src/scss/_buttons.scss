@@ -1,142 +1,157 @@
-.icon-text-btn {
+@if $include-icon-btn == true {
+  .icon-text-btn {
 
-  > div {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
+    > div {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
 
-  .icon + span,
-  span + .icon {
-    margin-left: $icon-text-btn-margin;
-  }
-}
-
-
-.flat-btn {
-	position: relative;
-  font-family: $flat-btn-font;
-  padding: $flat-btn-padding;
-  border: 0;
-
-  &:active,
-  &.active {
-    top: $flat-btn-active-offset;
-    outline: none;
-    box-shadow: none;
-  }
-
-  @each $btn in $flat-btn-classes {
-    @include flat-btn(nth($btn, 1), nth($btn, 2), nth($btn, 3), nth($btn, 4));
-  }
-}
-
-.icon-btn {
-  position: relative;
-  border: none;
-  background-color: transparent;
-  padding: $icon-btn-padding;
-  font-size: $icon-btn-font-size;
-
-  &:focus:not(.tab-focus) {
-    outline: none;
-  }
-
-  > [class^='help-text'] {
-    @extend .floating-box;
-
-    font-family: $help-text-font;
-    font-size: $help-text-font-size;
-    white-space: pre;
-
-    @include floating-box-color($help-text-background-color, $help-text-color);
-  }
-
-  @each $dir in top, right, bottom, left {
-    > .help-text-#{$dir} {
-      @extend .floating-box-#{$dir};
+    .icon + span,
+    span + .icon {
+      margin-left: $icon-text-btn-margin;
     }
   }
 }
 
 
-
-
-
-
-.hamburger-btn {
-  position: relative;
-  padding: $icon-btn-padding;
-
-  .bars-wrapper {
+@if $include-flat-btn == true {
+  .flat-btn {
     position: relative;
-    width: $icon-btn-font-size;
-    height: $icon-btn-font-size;
-  }
+    font-family: $flat-btn-font;
+    padding: $flat-btn-padding;
+    border: 0;
 
-  .left-bars,
-  .left-bars:before,
-  .left-bars:after,
-  .right-bars,
-  .right-bars:before,
-  .right-bars:after {
-    content: '';
-    position: absolute;
-    width: $icon-btn-font-size / 2;
-    height: $hamburger-btn-line-height;
+    &:active,
+    &.active {
+      top: $flat-btn-active-offset;
+      outline: none;
+      box-shadow: none;
+    }
 
-    background: $hamburger-btn-line-color;
-    transition: transform $button-transition-time, background $button-transition-time;
-  }
-
-  .left-bars,
-  .left-bars:before,
-  .left-bars:after {
-    left: 0;
-  }
-
-  .right-bars,
-  .right-bars:before,
-  .right-bars:after {
-    right: 0;
-  }
-
-  @include hamburger-position();
-
-  &.active {
-    .left-bars, .right-bars {
-      background: transparent;
+    @each $btn in $flat-btn-classes {
+      @include flat-btn(nth($btn, 1), nth($btn, 2), nth($btn, 3), nth($btn, 4));
     }
   }
+}
 
-  &.hamburger-btn-lg {
-    $size: $icon-btn-font-size * $hamburger-btn-lg-scale;
-    $line-height: $hamburger-btn-line-height * $hamburger-btn-lg-scale;
-    @include hamburger-size($size, $line-height);
-    @include hamburger-position($size, $line-height);
+@if $include-icon-btn == true {
+  .icon-btn {
+    position: relative;
+    border: none;
+    background-color: transparent;
+    padding: $icon-btn-padding;
+    font-size: $icon-btn-font-size;
+
+    &:focus:not(.tab-focus) {
+      outline: none;
+    }
+
+    @if $include-floating-box == true and $include-help-text == true {
+      > [class^='help-text'] {
+        @extend .floating-box;
+
+        font-family: $help-text-font;
+        font-size: $help-text-font-size;
+        white-space: pre;
+
+        @include floating-box-color($help-text-background-color, $help-text-color);
+      }
+
+      @each $dir in top, right, bottom, left {
+        > .help-text-#{$dir} {
+          @extend .floating-box-#{$dir};
+        }
+      }
+    }
   }
 }
 
 
 
-.floating-btn {
-  position: fixed;
-  right: $floating-btn-right;
-  bottom: $floating-btn-bottom;
 
-  padding: 0;
-  width: $floating-btn-size;
-  height: $floating-btn-size;
 
-  border-radius: $floating-btn-border-radius;
-  font-size: $floating-btn-font-size;
-  box-shadow: $floating-btn-box-shadow;
+@if $include-hamburger-btn == true {
+  .hamburger-btn {
+    position: relative;
+    padding: $icon-btn-padding;
 
-  @each $btn in $floating-btn-classes {
-    &.floating-btn-#{nth($btn, 1)} {
-      color: nth($btn, 2);
-      background-color: nth($btn, 3);
+    .bars-wrapper {
+      position: relative;
+    }
+
+    .left-bars,
+    .left-bars:before,
+    .left-bars:after,
+    .right-bars,
+    .right-bars:before,
+    .right-bars:after {
+      content: '';
+      position: absolute;
+
+      background: $hamburger-btn-line-color;
+      transition: transform $button-transition-time, background $button-transition-time;
+    }
+
+    .left-bars,
+    .left-bars:before,
+    .left-bars:after {
+      left: 0;
+    }
+
+    .right-bars,
+    .right-bars:before,
+    .right-bars:after {
+      right: 0;
+    }
+
+    @include hamburger-position();
+
+    &.active {
+      .left-bars, .right-bars {
+        background: transparent;
+      }
+    }
+
+    $btn-size: $icon-btn-font-size - $hamburger-btn-size-scale;
+    $line-size: $hamburger-btn-line-height - $hamburger-btn-line-scale;
+    @for $i from 1 through length($hamburger-btn-sizes) {
+      $size: nth($hamburger-btn-sizes, $i);
+
+      &.hamburger-btn-#{$size} {
+        @include hamburger-size($btn-size, $line-size);
+        @include hamburger-position($btn-size, $line-size);
+
+      }
+
+      $btn-size: $btn-size + $hamburger-btn-size-scale;
+      $line-size: $line-size + $hamburger-btn-line-scale;
+    }
+  }
+}
+
+
+
+@if $include-floating-btn == true {
+  .floating-btn {
+    position: fixed;
+    right: $floating-btn-right;
+    bottom: $floating-btn-bottom;
+
+    padding: 0;
+    width: $floating-btn-size;
+    height: $floating-btn-size;
+
+    border-radius: $floating-btn-border-radius;
+    font-size: $floating-btn-font-size;
+    box-shadow: $floating-btn-box-shadow;
+
+    @each $btn in $floating-btn-classes {
+      &.floating-btn-#{nth($btn, 1)} {
+        color: nth($btn, 2);
+        background-color: nth($btn, 3);
+      }
     }
   }
 }

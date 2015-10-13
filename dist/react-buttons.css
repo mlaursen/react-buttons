@@ -143,8 +143,6 @@
 }
 .hamburger-btn .bars-wrapper {
   position: relative;
-  width: 24px;
-  height: 24px;
 }
 .hamburger-btn .left-bars,
 .hamburger-btn .left-bars:before,
@@ -154,8 +152,6 @@
 .hamburger-btn .right-bars:after {
   content: '';
   position: absolute;
-  width: 12px;
-  height: 2px;
   background: #000;
   transition: -webkit-transform 0.15s, background 0.15s;
   transition: transform 0.15s, background 0.15s;
@@ -202,9 +198,93 @@
 .hamburger-btn.active .left-bars, .hamburger-btn.active .right-bars {
   background: transparent;
 }
+.hamburger-btn.hamburger-btn-sm .bars-wrapper {
+  width: 18px;
+  height: 18px;
+}
+.hamburger-btn.hamburger-btn-sm .left-bars,
+.hamburger-btn.hamburger-btn-sm .left-bars:before,
+.hamburger-btn.hamburger-btn-sm .left-bars:after,
+.hamburger-btn.hamburger-btn-sm .right-bars,
+.hamburger-btn.hamburger-btn-sm .right-bars:before,
+.hamburger-btn.hamburger-btn-sm .right-bars:after {
+  width: 9px;
+  height: 1.5px;
+}
+.hamburger-btn.hamburger-btn-sm .left-bars,
+.hamburger-btn.hamburger-btn-sm .right-bars {
+  opacity: 1;
+  top: 8.25px;
+}
+.hamburger-btn.hamburger-btn-sm .left-bars:before,
+.hamburger-btn.hamburger-btn-sm .right-bars:before {
+  top: -5.25px;
+}
+.hamburger-btn.hamburger-btn-sm .left-bars:after,
+.hamburger-btn.hamburger-btn-sm .right-bars:after {
+  top: 5.25px;
+}
+.hamburger-btn.hamburger-btn-sm.active .left-bars:before {
+  -webkit-transform: translate3d(1.5px, 2.25px, 0) rotateZ(45deg);
+          transform: translate3d(1.5px, 2.25px, 0) rotateZ(45deg);
+}
+.hamburger-btn.hamburger-btn-sm.active .left-bars:after {
+  -webkit-transform: translate3d(1.5px, -2.25px, 0) rotateZ(-45deg);
+          transform: translate3d(1.5px, -2.25px, 0) rotateZ(-45deg);
+}
+.hamburger-btn.hamburger-btn-sm.active .right-bars:before {
+  -webkit-transform: translate3d(-1.5px, 2.25px, 0) rotateZ(-45deg);
+          transform: translate3d(-1.5px, 2.25px, 0) rotateZ(-45deg);
+}
+.hamburger-btn.hamburger-btn-sm.active .right-bars:after {
+  -webkit-transform: translate3d(-1.5px, -2.25px, 0) rotateZ(45deg);
+          transform: translate3d(-1.5px, -2.25px, 0) rotateZ(45deg);
+}
+.hamburger-btn.hamburger-btn-md .bars-wrapper {
+  width: 24px;
+  height: 24px;
+}
+.hamburger-btn.hamburger-btn-md .left-bars,
+.hamburger-btn.hamburger-btn-md .left-bars:before,
+.hamburger-btn.hamburger-btn-md .left-bars:after,
+.hamburger-btn.hamburger-btn-md .right-bars,
+.hamburger-btn.hamburger-btn-md .right-bars:before,
+.hamburger-btn.hamburger-btn-md .right-bars:after {
+  width: 12px;
+  height: 2px;
+}
+.hamburger-btn.hamburger-btn-md .left-bars,
+.hamburger-btn.hamburger-btn-md .right-bars {
+  opacity: 1;
+  top: 11px;
+}
+.hamburger-btn.hamburger-btn-md .left-bars:before,
+.hamburger-btn.hamburger-btn-md .right-bars:before {
+  top: -7px;
+}
+.hamburger-btn.hamburger-btn-md .left-bars:after,
+.hamburger-btn.hamburger-btn-md .right-bars:after {
+  top: 7px;
+}
+.hamburger-btn.hamburger-btn-md.active .left-bars:before {
+  -webkit-transform: translate3d(2px, 3px, 0) rotateZ(45deg);
+          transform: translate3d(2px, 3px, 0) rotateZ(45deg);
+}
+.hamburger-btn.hamburger-btn-md.active .left-bars:after {
+  -webkit-transform: translate3d(2px, -3px, 0) rotateZ(-45deg);
+          transform: translate3d(2px, -3px, 0) rotateZ(-45deg);
+}
+.hamburger-btn.hamburger-btn-md.active .right-bars:before {
+  -webkit-transform: translate3d(-2px, 3px, 0) rotateZ(-45deg);
+          transform: translate3d(-2px, 3px, 0) rotateZ(-45deg);
+}
+.hamburger-btn.hamburger-btn-md.active .right-bars:after {
+  -webkit-transform: translate3d(-2px, -3px, 0) rotateZ(45deg);
+          transform: translate3d(-2px, -3px, 0) rotateZ(45deg);
+}
 .hamburger-btn.hamburger-btn-lg .bars-wrapper {
-  width: 42px;
-  height: 42px;
+  width: 30px;
+  height: 30px;
 }
 .hamburger-btn.hamburger-btn-lg .left-bars,
 .hamburger-btn.hamburger-btn-lg .left-bars:before,
@@ -212,37 +292,79 @@
 .hamburger-btn.hamburger-btn-lg .right-bars,
 .hamburger-btn.hamburger-btn-lg .right-bars:before,
 .hamburger-btn.hamburger-btn-lg .right-bars:after {
-  width: 21px;
-  height: 3.5px;
+  width: 15px;
+  height: 2.5px;
 }
 .hamburger-btn.hamburger-btn-lg .left-bars,
 .hamburger-btn.hamburger-btn-lg .right-bars {
   opacity: 1;
-  top: 19.25px;
+  top: 13.75px;
 }
 .hamburger-btn.hamburger-btn-lg .left-bars:before,
 .hamburger-btn.hamburger-btn-lg .right-bars:before {
-  top: -12.25px;
+  top: -8.75px;
 }
 .hamburger-btn.hamburger-btn-lg .left-bars:after,
 .hamburger-btn.hamburger-btn-lg .right-bars:after {
-  top: 12.25px;
+  top: 8.75px;
 }
 .hamburger-btn.hamburger-btn-lg.active .left-bars:before {
-  -webkit-transform: translate3d(3.5px, 5.25px, 0) rotateZ(45deg);
-          transform: translate3d(3.5px, 5.25px, 0) rotateZ(45deg);
+  -webkit-transform: translate3d(2.5px, 3.75px, 0) rotateZ(45deg);
+          transform: translate3d(2.5px, 3.75px, 0) rotateZ(45deg);
 }
 .hamburger-btn.hamburger-btn-lg.active .left-bars:after {
-  -webkit-transform: translate3d(3.5px, -5.25px, 0) rotateZ(-45deg);
-          transform: translate3d(3.5px, -5.25px, 0) rotateZ(-45deg);
+  -webkit-transform: translate3d(2.5px, -3.75px, 0) rotateZ(-45deg);
+          transform: translate3d(2.5px, -3.75px, 0) rotateZ(-45deg);
 }
 .hamburger-btn.hamburger-btn-lg.active .right-bars:before {
-  -webkit-transform: translate3d(-3.5px, 5.25px, 0) rotateZ(-45deg);
-          transform: translate3d(-3.5px, 5.25px, 0) rotateZ(-45deg);
+  -webkit-transform: translate3d(-2.5px, 3.75px, 0) rotateZ(-45deg);
+          transform: translate3d(-2.5px, 3.75px, 0) rotateZ(-45deg);
 }
 .hamburger-btn.hamburger-btn-lg.active .right-bars:after {
-  -webkit-transform: translate3d(-3.5px, -5.25px, 0) rotateZ(45deg);
-          transform: translate3d(-3.5px, -5.25px, 0) rotateZ(45deg);
+  -webkit-transform: translate3d(-2.5px, -3.75px, 0) rotateZ(45deg);
+          transform: translate3d(-2.5px, -3.75px, 0) rotateZ(45deg);
+}
+.hamburger-btn.hamburger-btn-xl .bars-wrapper {
+  width: 36px;
+  height: 36px;
+}
+.hamburger-btn.hamburger-btn-xl .left-bars,
+.hamburger-btn.hamburger-btn-xl .left-bars:before,
+.hamburger-btn.hamburger-btn-xl .left-bars:after,
+.hamburger-btn.hamburger-btn-xl .right-bars,
+.hamburger-btn.hamburger-btn-xl .right-bars:before,
+.hamburger-btn.hamburger-btn-xl .right-bars:after {
+  width: 18px;
+  height: 3px;
+}
+.hamburger-btn.hamburger-btn-xl .left-bars,
+.hamburger-btn.hamburger-btn-xl .right-bars {
+  opacity: 1;
+  top: 16.5px;
+}
+.hamburger-btn.hamburger-btn-xl .left-bars:before,
+.hamburger-btn.hamburger-btn-xl .right-bars:before {
+  top: -10.5px;
+}
+.hamburger-btn.hamburger-btn-xl .left-bars:after,
+.hamburger-btn.hamburger-btn-xl .right-bars:after {
+  top: 10.5px;
+}
+.hamburger-btn.hamburger-btn-xl.active .left-bars:before {
+  -webkit-transform: translate3d(3px, 4.5px, 0) rotateZ(45deg);
+          transform: translate3d(3px, 4.5px, 0) rotateZ(45deg);
+}
+.hamburger-btn.hamburger-btn-xl.active .left-bars:after {
+  -webkit-transform: translate3d(3px, -4.5px, 0) rotateZ(-45deg);
+          transform: translate3d(3px, -4.5px, 0) rotateZ(-45deg);
+}
+.hamburger-btn.hamburger-btn-xl.active .right-bars:before {
+  -webkit-transform: translate3d(-3px, 4.5px, 0) rotateZ(-45deg);
+          transform: translate3d(-3px, 4.5px, 0) rotateZ(-45deg);
+}
+.hamburger-btn.hamburger-btn-xl.active .right-bars:after {
+  -webkit-transform: translate3d(-3px, -4.5px, 0) rotateZ(45deg);
+          transform: translate3d(-3px, -4.5px, 0) rotateZ(45deg);
 }
 
 .floating-btn {

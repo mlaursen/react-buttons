@@ -76,10 +76,10 @@ export default class Example extends Component {
             <a href="#" className="icon-text-btn"><i className="icon fa fa-users" />Hello, world!</a>
             <FlatButton {...FLAT_BTN_PROPS[this.state.flatBtnPropsIndex]} onClick={this.nextFlatBtn}>Click for other props</FlatButton>
             <IconButton {...ICON_BTN_PROPS[this.state.iconBtnPropsIndex]} onClick={this.nextIconBtn} />
-            <HamburgerButton active={isHamburgerActive[0]} onClick={this.toggleHamburger.bind(this, 0)} label="Boop" />
-            <HamburgerButton active={isHamburgerActive[1]} onClick={this.toggleHamburger.bind(this, 1)} isLarge={true} label="Boop" />
-            <HamburgerButton className="fancy-dancy" active={isHamburgerActive[2]} onClick={this.toggleHamburger.bind(this, 2)} label="Boop" />
-            <HamburgerButton className="fancy-dancy" active={isHamburgerActive[3]} onClick={this.toggleHamburger.bind(this, 3)} isLarge={true} label="Boop" />
+            <HamburgerButton active={isHamburgerActive[0]} onClick={this.toggleHamburger.bind(this, 0)} size="sm" label="Boop" />
+            <HamburgerButton active={isHamburgerActive[1]} onClick={this.toggleHamburger.bind(this, 1)} label="Boop" />
+            <HamburgerButton className="fancy-dancy" active={isHamburgerActive[2]} onClick={this.toggleHamburger.bind(this, 2)} size="lg" label="Boop" />
+            <HamburgerButton className="fancy-dancy" active={isHamburgerActive[3]} onClick={this.toggleHamburger.bind(this, 3)} size="xl" label="Boop" />
           </div>
         </main>
         <FloatingButton {...FLOATING_BTN_PROPS[this.state.floatingBtnPropsIndex]} onClick={this.nextFloatingBtn} />

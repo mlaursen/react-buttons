@@ -24,6 +24,8 @@ Include the css file or import the sass file
 > [my postinstall script](https://github.com/mlaursen/gulpfile-example/blob/master/scripts/postinstall.js#L31)
 > for an example.
 
+> Each component can be disabled and not inluded in your compiled source by changing the variables **$include-x**
+> Check [the sass source](https://github.com/mlaursen/react-buttons/blob/master/src/scss/_variables.scss)
 
 ## Example
 
@@ -50,7 +52,7 @@ class Example extends Component {
         <IconButton faIcon="plus" label="Add a new thing" onClick={/* something */} />
         <IconButton materialIcon="favorite" label="Add this as a favorite" onClick={/* something */} />
 
-        <HamburgerButton active={false} isLarge={true} onClick={/* something */} />
+        <HamburgerButton active={false} size="lg" onClick={/* something */} />
         <HamburgerButton active={this.props.btnActive} onClick={/* toggle */} />
 
         <FlatButton color="primary" onClick={/* something */} />
@@ -109,7 +111,6 @@ should be doing.
     helpPosition: 'bottom',
     type: 'button',
     helpTextTime: 1000,
-    onClick: (e) => { console.warn('IconButton with no clicky click', e.target); },
   }
 ```
 
@@ -128,16 +129,15 @@ This is just a *pretty* hamburger button that has the lines move into an X if yo
 ```js
   static propTypes = {
     active: PropTypes.bool,
-    isLarge: PropTypes.bool,
+    size: PropTypes.string,
     label: PropTypes.string.isRequired,
     helpPosition: PropTypes.oneOf(['top', 'left', 'bottom', 'right']),
   }
 
   static defaultProps = {
     active: false,
-    isLarge: false,
+    size: 'md',
     helpPosition: 'bottom',
-    onClick: (e) => { console.warn('HamburgerButton with no clicky click', e.target); },
   }
 ```
 
