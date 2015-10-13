@@ -14,11 +14,13 @@ export class Button extends Component {
     faIcon: PropTypes.string,
     materialIcon: PropTypes.string,
     type: PropTypes.oneOf(['button', 'submit', 'reset']),
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+    children: PropTypes.node,
   }
 
   static defaultProps = {
     iconBefore: false,
-    onClick: (e) => { console.warn('Button with no clicky click', e.target); },
     type: 'button',
   }
 
@@ -26,21 +28,22 @@ export class Button extends Component {
     const { iconBefore, faIcon, materialIcon, className, ...props } = this.props;
     let icon = null;
     if(faIcon) {
-      icon = <i className={`fa fa-${faIcon}`} />;
+      icon = <i className={`icon fa fa-${faIcon}`} />;
     } else if(materialIcon) {
-      icon = <i className="material-icons">{materialIcon}</i>;
+      icon = <i className="icon material-icons">{materialIcon}</i>;
     }
 
     return (
       <button {...props} className={classnames(className, { 'icon-text-btn': icon })}>
-        {iconBefore && icon}
-        {this.props.children}
-        {!iconBefore && icon}
+        <div>
+          {iconBefore && icon}
+          {this.props.children}
+          {!iconBefore && icon}
+        </div>
       </button>
-    )
+    );
   }
 }
-
 
 const TAB = 9;
 const SPACEBAR = 32;
@@ -53,8 +56,10 @@ export class IconButton extends Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.state = {
       isTabFocused: false,
-      isHelpTextVisible: false
+      isHelpTextVisible: false,
     };
+
+    this.helpTextTimer = null;
   }
 
   static propTypes = {
@@ -64,16 +69,17 @@ export class IconButton extends Component {
     materialIcon: PropTypes.string,
     type: PropTypes.oneOf(['button', 'reset', 'submit']),
     helpTextTime: PropTypes.number,
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    children: PropTypes.node,
   }
 
   static defaultProps = {
     helpPosition: 'bottom',
     type: 'button',
     helpTextTime: 1000,
-    onClick: (e) => { console.warn('IconButton with no clicky click', e.target); },
+    onClick: () => {},
   }
-
-  helpTextTimer = null
 
   handleClick = (e) => {
     this.props.onClick(e);
@@ -90,16 +96,16 @@ export class IconButton extends Component {
     }
   }
 
-  removeTabFocus = (e) => {
+  removeTabFocus = () => {
     this.setHelpTextVisible(false);
     this.setState({ isTabFocused: false });
   }
 
-  handleMouseOver = (e) => {
+  handleMouseOver = () => {
     this.setHelpTextVisible(true);
   }
 
-  handleMouseLeave = (e) => {
+  handleMouseLeave = () => {
     this.setHelpTextVisible(false);
   }
 
@@ -154,8 +160,6 @@ export class IconButton extends Component {
 }
 
 
-
-
 export class HamburgerButton extends Component {
   constructor(props) {
     super(props);
@@ -165,22 +169,23 @@ export class HamburgerButton extends Component {
 
   static propTypes = {
     active: PropTypes.bool,
-    isLarge: PropTypes.bool,
     label: PropTypes.string.isRequired,
     helpPosition: PropTypes.oneOf(['top', 'left', 'bottom', 'right']),
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    size: PropTypes.string,
   }
 
   static defaultProps = {
     active: false,
-    isLarge: false,
     helpPosition: 'bottom',
-    onClick: (e) => { console.warn('HamburgerButton with no clicky click', e.target); },
+    size: 'md',
   }
 
   render() {
     const className = classnames('hamburger-btn', this.props.className, {
       'active': this.props.active,
-      'hamburger-btn-lg': this.props.isLarge,
+      [`hamburger-btn-${this.props.size}`]: this.props.size,
     });
 
     return (
@@ -205,6 +210,7 @@ export class FlatButton extends Component {
   static propTypes = {
     color: PropTypes.string,
     active: PropTypes.bool,
+    className: PropTypes.string,
   }
 
   static defaultProps = {
@@ -232,6 +238,7 @@ export class FloatingButton extends Component {
 
   static propTypes = {
     color: PropTypes.string,
+    className: PropTypes.string,
   }
 
   static defaultProps = {
