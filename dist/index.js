@@ -54,11 +54,11 @@ var Button = (function (_Component) {
 
       var icon = null;
       if (faIcon) {
-        icon = _react2['default'].createElement('i', { className: 'fa fa-' + faIcon });
+        icon = _react2['default'].createElement('i', { className: 'icon fa fa-' + faIcon });
       } else if (materialIcon) {
         icon = _react2['default'].createElement(
           'i',
-          { className: 'material-icons' },
+          { className: 'icon material-icons' },
           materialIcon
         );
       }
@@ -66,9 +66,13 @@ var Button = (function (_Component) {
       return _react2['default'].createElement(
         'button',
         _extends({}, props, { className: (0, _classnames2['default'])(className, { 'icon-text-btn': icon }) }),
-        iconBefore && icon,
-        this.props.children,
-        !iconBefore && icon
+        _react2['default'].createElement(
+          'div',
+          null,
+          iconBefore && icon,
+          this.props.children,
+          !iconBefore && icon
+        )
       );
     }
   }], [{
@@ -77,16 +81,16 @@ var Button = (function (_Component) {
       iconBefore: _react.PropTypes.bool,
       faIcon: _react.PropTypes.string,
       materialIcon: _react.PropTypes.string,
-      type: _react.PropTypes.oneOf(['button', 'submit', 'reset'])
+      type: _react.PropTypes.oneOf(['button', 'submit', 'reset']),
+      className: _react.PropTypes.string,
+      onClick: _react.PropTypes.func,
+      children: _react.PropTypes.node
     },
     enumerable: true
   }, {
     key: 'defaultProps',
     value: {
       iconBefore: false,
-      onClick: function onClick(e) {
-        console.warn('Button with no clicky click', e.target);
-      },
       type: 'button'
     },
     enumerable: true
@@ -111,8 +115,6 @@ var IconButton = (function (_Component2) {
 
     _get(Object.getPrototypeOf(IconButton.prototype), 'constructor', this).call(this, props);
 
-    this.helpTextTimer = null;
-
     this.handleClick = function (e) {
       _this.props.onClick(e);
       _this.setHelpTextVisible(false);
@@ -128,16 +130,16 @@ var IconButton = (function (_Component2) {
       }
     };
 
-    this.removeTabFocus = function (e) {
+    this.removeTabFocus = function () {
       _this.setHelpTextVisible(false);
       _this.setState({ isTabFocused: false });
     };
 
-    this.handleMouseOver = function (e) {
+    this.handleMouseOver = function () {
       _this.setHelpTextVisible(true);
     };
 
-    this.handleMouseLeave = function (e) {
+    this.handleMouseLeave = function () {
       _this.setHelpTextVisible(false);
     };
 
@@ -146,6 +148,8 @@ var IconButton = (function (_Component2) {
       isTabFocused: false,
       isHelpTextVisible: false
     };
+
+    this.helpTextTimer = null;
   }
 
   _createClass(IconButton, [{
@@ -218,7 +222,10 @@ var IconButton = (function (_Component2) {
       faIcon: _react.PropTypes.string,
       materialIcon: _react.PropTypes.string,
       type: _react.PropTypes.oneOf(['button', 'reset', 'submit']),
-      helpTextTime: _react.PropTypes.number
+      helpTextTime: _react.PropTypes.number,
+      onClick: _react.PropTypes.func,
+      className: _react.PropTypes.string,
+      children: _react.PropTypes.node
     },
     enumerable: true
   }, {
@@ -227,9 +234,7 @@ var IconButton = (function (_Component2) {
       helpPosition: 'bottom',
       type: 'button',
       helpTextTime: 1000,
-      onClick: function onClick(e) {
-        console.warn('IconButton with no clicky click', e.target);
-      }
+      onClick: function onClick() {}
     },
     enumerable: true
   }]);
@@ -275,7 +280,9 @@ var HamburgerButton = (function (_Component3) {
       active: _react.PropTypes.bool,
       isLarge: _react.PropTypes.bool,
       label: _react.PropTypes.string.isRequired,
-      helpPosition: _react.PropTypes.oneOf(['top', 'left', 'bottom', 'right'])
+      helpPosition: _react.PropTypes.oneOf(['top', 'left', 'bottom', 'right']),
+      onClick: _react.PropTypes.func,
+      className: _react.PropTypes.string
     },
     enumerable: true
   }, {
@@ -283,10 +290,7 @@ var HamburgerButton = (function (_Component3) {
     value: {
       active: false,
       isLarge: false,
-      helpPosition: 'bottom',
-      onClick: function onClick(e) {
-        console.warn('HamburgerButton with no clicky click', e.target);
-      }
+      helpPosition: 'bottom'
     },
     enumerable: true
   }]);
@@ -327,7 +331,8 @@ var FlatButton = (function (_Component4) {
     key: 'propTypes',
     value: {
       color: _react.PropTypes.string,
-      active: _react.PropTypes.bool
+      active: _react.PropTypes.bool,
+      className: _react.PropTypes.string
     },
     enumerable: true
   }, {
@@ -365,7 +370,8 @@ var FloatingButton = (function (_Component5) {
   }], [{
     key: 'propTypes',
     value: {
-      color: _react.PropTypes.string
+      color: _react.PropTypes.string,
+      className: _react.PropTypes.string
     },
     enumerable: true
   }, {

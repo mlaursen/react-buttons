@@ -40,8 +40,8 @@ $floating-btn-z-index: $floating-box-z-index - 1 !default;
 $floating-btn-right: 1em !default;
 $floating-btn-bottom: 1em !default;
 $floating-btn-border-radius: 50% !default;
-$floating-btn-font-size: 2 * $icon-btn-font-size !default;
-$floating-btn-size: $floating-btn-font-size * 1.75;
+$floating-btn-font-size: 2.5rem !default;
+$floating-btn-size: $floating-btn-font-size * 1.75 !default;
 $floating-btn-box-shadow: 0 0 4px rgba(0, 0, 0, .15), 0 2px 6px rgba(0, 0, 0, .66) !default;
 $floating-btn-classes: (
 	('default', $btn-text-color, $btn-default-color),

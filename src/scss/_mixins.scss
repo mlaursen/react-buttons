@@ -33,17 +33,41 @@
 
 
 
-@mixin hamburger-color($bg: $hamburger-btn-bg-color, $color: $hamburger-btn-line-color) {
+@mixin hamburger-color($bg: $hamburger-btn-bg-color, $color: $hamburger-btn-line-color, $hover-color: null) {
   background: $bg;
 
-  .left-bars,
+  &:not(.active) {
+    .left-bars,
+    .right-bars {
+      background: $color;
+    }
+  }
+
   .left-bars:before,
   .left-bars:after,
-  .right-bars,
   .right-bars:before,
   .right-bars:after {
     background: $color;
   }
+  
+  @if $hover-color != null {
+    &:hover {
+      &:not(.active) {
+        .left-bars,
+        .right-bars {
+          background: $hover-color;
+        }
+      }
+
+      .left-bars:before,
+      .left-bars:after,
+      .right-bars:before,
+      .right-bars:after {
+        background: $hover-color;
+      }
+    }
+  }
+
 }
 
 @mixin hamburger-size($size: $icon-btn-font-size, $line-height: $hamburger-btn-line-height) {

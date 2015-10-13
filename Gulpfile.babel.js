@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import gutil from 'gulp-util';
+import eslint from 'gulp-eslint';
 import sourcemaps from 'gulp-sourcemaps';
 import del from 'del';
 import sass from 'gulp-ruby-sass';
@@ -49,6 +50,13 @@ function styles(source, dist, isProd, isServer) {
     .pipe(isServer ? browserSync.stream() : gutil.noop());
 }
 
+function lint(src, isProd) {
+  return gulp.src(`${src}/**/*.js`)
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(isProd ? eslint.failOnError() : gutil.noop());
+}
+
 function scripts(isProd) {
   return gulp.src(SRC + JS + '/index.js')
     .pipe(babel())
@@ -70,7 +78,12 @@ gulp.task('styles', () => {
   return styles(source, DIST, true, false);
 });
 
-gulp.task('scripts', () => {
+
+gulp.task('lint', () => {
+  return lint(SRC);
+});
+
+gulp.task('scripts', ['lint'], () => {
   scripts(false);
   return scripts(true);
 });
@@ -115,9 +128,12 @@ gulp.task('styles:example', () => {
 });
 gulp.task('styles-watch:example', ['styles:example']);
 
+gulp.task('lint:example', () => {
+  return lint(EXAMPLE_SRC);
+});
 
-gulp.task('scripts:example', () => {
-  return bundle(true);
+gulp.task('scripts:example', ['lint:example'], () => {
+  return bundle(false);
 });
 gulp.task('scripts-watch:example', ['scripts:example'], browserSync.reload);
 
