@@ -133,7 +133,7 @@ gulp.task('lint:example', () => {
 });
 
 gulp.task('scripts:example', ['lint:example'], () => {
-  return bundle(false);
+  return bundle(true);
 });
 gulp.task('scripts-watch:example', ['scripts:example'], browserSync.reload);
 
