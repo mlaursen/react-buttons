@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "gulp serve",
-    "build": "gulp dist",
+    "build": "gulp dist:example",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'",
     "lint": "eslint --config=./.eslintrc src/js/**/*.js"
   },
