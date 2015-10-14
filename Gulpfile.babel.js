@@ -21,7 +21,7 @@ const EXAMPLE_SRC = './example';
 const DIST = './dist';
 const EXAMPLE_DIST = './distExample';
 const SCSS = '/scss';
-const JS   = '/js';
+const JS = '/js';
 
 const PROD_CONFIG = {
   sass: { style: 'compressed' },
@@ -41,7 +41,7 @@ function styles(source, dist, isProd, isServer) {
     .pipe(postcss([
       autoprefixer({
         browsers: ['last 2 version'],
-      })
+      }),
     ]))
     .pipe(isProd ? rename({ suffix: '.min' }) : gutil.noop())
     .pipe(isServer ? sourcemaps.init({ loadMaps: true }) : gutil.noop())
@@ -93,8 +93,6 @@ gulp.task('dist', ['clean', 'styles', 'scripts']);
 gulp.task('default', ['dist']);
 
 
-
-
 function bundle(isProd) {
   const config = isProd ? PROD_CONFIG : DEV_CONFIG;
   const bundle = browserify(config.browserify);
@@ -137,8 +135,8 @@ gulp.task('dist:example', ['styles:example', 'scripts:example', 'statics:example
 gulp.task('serve', ['dist:example'], () => {
   browserSync({
     server: {
-      baseDir: EXAMPLE_DIST
-    }
+      baseDir: EXAMPLE_DIST,
+    },
   });
 
   gulp.watch(['./src/**/*.js', './example/**/*.js'], ['scripts-watch:example']);
