@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 
@@ -7,6 +8,8 @@ export class Button extends Component {
     super(props);
 
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    this.rippleEffect = null;
+    this.ripple = null;
   }
 
   static propTypes = {
@@ -17,15 +20,65 @@ export class Button extends Component {
     className: PropTypes.string,
     onClick: PropTypes.func,
     children: PropTypes.node,
+    ripple: PropTypes.bool,
+    rippleTime: PropTypes.number,
   }
 
   static defaultProps = {
     iconBefore: false,
     type: 'button',
+    onClick: () => {},
+    ripple: false,
+    rippleTime: 300,
+  }
+
+  onClick = (e) => {
+    this.props.onClick(e);
+    if(!this.props.ripple) {
+      return;
+    }
+
+    const button = ReactDOM.findDOMNode(this)
+
+    if(this.rippleEffect) {
+      this.ripple.classList.remove('active');
+    }
+
+    const x = e.pageX - button.offsetLeft - this.ripple.offsetWidth / 2;
+    const y = e.pageY - button.offsetTop - this.ripple.offsetHeight / 2;
+
+    this.ripple.style.top = y + 'px';
+    this.ripple.style.left = x + 'px';
+    this.ripple.classList.add('active');
+    this.rippleEffect = setTimeout(() => {
+      this.ripple.classList.remove('active');
+      this.rippleEffect = null;
+    }, this.props.rippleTime);
+  }
+
+  componentDidMount() {
+    if(this.props.ripple) {
+      const button = ReactDOM.findDOMNode(this);
+      const size = Math.max(button.offsetHeight, button.offsetWidth) + 'px';
+
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple-effect');
+      ripple.style.height = size;
+      ripple.style.width = size;
+
+      button.insertBefore(ripple, button.firstChild);
+      this.ripple = ripple;
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.rippleEffect) {
+      clearTimeout(this.rippleEffect);
+    }
   }
 
   render() {
-    const { iconBefore, faIcon, materialIcon, className, ...props } = this.props;
+    const { iconBefore, faIcon, materialIcon, ripple, className, ...props } = this.props;
     let icon = null;
     if(faIcon) {
       icon = <i className={`icon fa fa-${faIcon}`} />;
@@ -33,8 +86,13 @@ export class Button extends Component {
       icon = <i className="icon material-icons">{materialIcon}</i>;
     }
 
+    const cn = classnames(className, {
+      'icon-text-btn': icon,
+      'ripple-btn': ripple,
+    });
+
     return (
-      <button {...props} className={classnames(className, { 'icon-text-btn': icon })}>
+      <button {...props} className={cn} onClick={this.onClick}>
         <div>
           {iconBefore && icon}
           {this.props.children}
