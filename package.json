@@ -7,7 +7,7 @@
     "start": "gulp serve",
     "build": "gulp dist:example",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'",
-    "lint": "eslint --config=./.eslintrc src/js/**/*.js"
+    "lint": "eslint --config=./.eslintrc src/js/**/*.js example/**/*.js"
   },
   "repository": {
     "type": "git",
