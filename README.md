@@ -79,18 +79,27 @@ This is just a basic button that helps with placing icons on a button before or 
     faIcon: PropTypes.string,
     materialIcon: PropTypes.string,
     type: PropTypes.oneOf(['button', 'submit', 'reset']),
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+    children: PropTypes.node,
+    ripple: PropTypes.bool,
+    rippleTime: PropTypes.number,
   }
 
   static defaultProps = {
     iconBefore: false,
-    onClick: (e) => { console.warn('Button with no clicky click', e.target); },
     type: 'button',
+    onClick: () => {},
+    ripple: false,
+    rippleTime: 300,
   }
 ```
 
 When giving a font-awesome icon, do not pass in 'fa fa-whatever'. All that is needed is 'whatever'.
 
 There is a corresponding css class names `.icon-text-btn` that gets applied to this button that adds a margin to icons and their text.
+
+There can be a ripple effect on the button if you change the value of `ripple` to true. You just need a background color on the button to work.
 
 #### IconButton
 This is a button that is only an icon with no text. There is some attempted accessibility built into
@@ -105,12 +114,16 @@ should be doing.
     materialIcon: PropTypes.string,
     type: PropTypes.oneOf(['button', 'reset', 'submit']),
     helpTextTime: PropTypes.number,
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    children: PropTypes.node,
   }
 
   static defaultProps = {
     helpPosition: 'bottom',
     type: 'button',
     helpTextTime: 1000,
+    onClick: () => {},
   }
 ```
 
@@ -129,9 +142,11 @@ This is just a *pretty* hamburger button that has the lines move into an X if yo
 ```js
   static propTypes = {
     active: PropTypes.bool,
-    size: PropTypes.string,
     label: PropTypes.string.isRequired,
     helpPosition: PropTypes.oneOf(['top', 'left', 'bottom', 'right']),
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    size: PropTypes.string,
   }
 
   static defaultProps = {
@@ -172,6 +187,7 @@ Creates a 'flat' button that presses down when clicked.
   static propTypes = {
     color: PropTypes.string,
     active: PropTypes.bool,
+    className: PropTypes.string,
   }
 
   static defaultProps = {
@@ -212,6 +228,7 @@ This is just a button that *floats* in the bottom right hand corner of the scree
 ```js
   static propTypes = {
     color: PropTypes.string,
+    className: PropTypes.string,
   }
 
   static defaultProps = {

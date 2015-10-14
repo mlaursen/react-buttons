@@ -6,6 +6,7 @@ $include-floating-box: true !default;
 $include-help-text: $include-floating-box !default;
 $include-hamburger-btn: true !default;
 $include-floating-btn: true !default;
+$include-ripple-btn: true !default;
 
 
 $react-buttons-font: 'Roboto', sans-serif !default;
@@ -79,4 +80,10 @@ $hamburger-btn-line-color: #000 !default;
 $hamburger-btn-line-height: 2px !default;
 $hamburger-btn-size-scale: 6px !default;
 $hamburger-btn-line-scale: 0.5px !default;
-$hamburger-btn-sizes: 'sm', 'md', 'lg', 'xl';
+$hamburger-btn-sizes: 'sm', 'md', 'lg', 'xl' !default;
+
+
+// Ripple Button
+$ripple-effect-duration: .3s !default;
+$ripple-effect-bg: rgba(255, 255, 255, 0.3) !default;
+$ripple-effect-final-scale: 2.5 !default;

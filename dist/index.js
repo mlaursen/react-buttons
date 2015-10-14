@@ -24,6 +24,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
 
 var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
@@ -36,23 +40,75 @@ var Button = (function (_Component) {
   _inherits(Button, _Component);
 
   function Button(props) {
+    var _this = this;
+
     _classCallCheck(this, Button);
 
     _get(Object.getPrototypeOf(Button.prototype), 'constructor', this).call(this, props);
 
+    this.onClick = function (e) {
+      _this.props.onClick(e);
+      if (!_this.props.ripple) {
+        return;
+      }
+
+      var button = _reactDom2['default'].findDOMNode(_this);
+
+      if (_this.rippleEffect) {
+        _this.ripple.classList.remove('active');
+      }
+
+      var x = e.pageX - button.offsetLeft - _this.ripple.offsetWidth / 2;
+      var y = e.pageY - button.offsetTop - _this.ripple.offsetHeight / 2;
+
+      _this.ripple.style.top = y + 'px';
+      _this.ripple.style.left = x + 'px';
+      _this.ripple.classList.add('active');
+      _this.rippleEffect = setTimeout(function () {
+        _this.ripple.classList.remove('active');
+        _this.rippleEffect = null;
+      }, _this.props.rippleTime);
+    };
+
     this.shouldComponentUpdate = _reactAddonsPureRenderMixin2['default'].shouldComponentUpdate.bind(this);
+    this.rippleEffect = null;
+    this.ripple = null;
   }
 
   _createClass(Button, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.ripple) {
+        var button = _reactDom2['default'].findDOMNode(this);
+        var size = Math.max(button.offsetHeight, button.offsetWidth) + 'px';
+
+        var ripple = document.createElement('span');
+        ripple.classList.add('ripple-effect');
+        ripple.style.height = size;
+        ripple.style.width = size;
+
+        button.insertBefore(ripple, button.firstChild);
+        this.ripple = ripple;
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      if (this.rippleEffect) {
+        clearTimeout(this.rippleEffect);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _props = this.props;
       var iconBefore = _props.iconBefore;
       var faIcon = _props.faIcon;
       var materialIcon = _props.materialIcon;
+      var ripple = _props.ripple;
       var className = _props.className;
 
-      var props = _objectWithoutProperties(_props, ['iconBefore', 'faIcon', 'materialIcon', 'className']);
+      var props = _objectWithoutProperties(_props, ['iconBefore', 'faIcon', 'materialIcon', 'ripple', 'className']);
 
       var icon = null;
       if (faIcon) {
@@ -65,9 +121,14 @@ var Button = (function (_Component) {
         );
       }
 
+      var cn = (0, _classnames3['default'])(className, {
+        'icon-text-btn': icon,
+        'ripple-btn': ripple
+      });
+
       return _react2['default'].createElement(
         'button',
-        _extends({}, props, { className: (0, _classnames3['default'])(className, { 'icon-text-btn': icon }) }),
+        _extends({}, props, { className: cn, onClick: this.onClick }),
         _react2['default'].createElement(
           'div',
           null,
@@ -86,14 +147,19 @@ var Button = (function (_Component) {
       type: _react.PropTypes.oneOf(['button', 'submit', 'reset']),
       className: _react.PropTypes.string,
       onClick: _react.PropTypes.func,
-      children: _react.PropTypes.node
+      children: _react.PropTypes.node,
+      ripple: _react.PropTypes.bool,
+      rippleTime: _react.PropTypes.number
     },
     enumerable: true
   }, {
     key: 'defaultProps',
     value: {
       iconBefore: false,
-      type: 'button'
+      type: 'button',
+      onClick: function onClick() {},
+      ripple: false,
+      rippleTime: 300
     },
     enumerable: true
   }]);
@@ -111,38 +177,38 @@ var IconButton = (function (_Component2) {
   _inherits(IconButton, _Component2);
 
   function IconButton(props) {
-    var _this = this;
+    var _this2 = this;
 
     _classCallCheck(this, IconButton);
 
     _get(Object.getPrototypeOf(IconButton.prototype), 'constructor', this).call(this, props);
 
     this.handleClick = function (e) {
-      _this.props.onClick(e);
-      _this.setHelpTextVisible(false);
+      _this2.props.onClick(e);
+      _this2.setHelpTextVisible(false);
     };
 
     this.handleKeyUp = function (e) {
       var key = e.which || e.keyCode;
       if (key === TAB) {
-        _this.setHelpTextVisible(true);
-        _this.setState({ isTabFocused: true });
+        _this2.setHelpTextVisible(true);
+        _this2.setState({ isTabFocused: true });
       } else if (key === SPACEBAR || key === ENTER) {
-        _this.setHelpTextVisible(false);
+        _this2.setHelpTextVisible(false);
       }
     };
 
     this.removeTabFocus = function () {
-      _this.setHelpTextVisible(false);
-      _this.setState({ isTabFocused: false });
+      _this2.setHelpTextVisible(false);
+      _this2.setState({ isTabFocused: false });
     };
 
     this.handleMouseOver = function () {
-      _this.setHelpTextVisible(true);
+      _this2.setHelpTextVisible(true);
     };
 
     this.handleMouseLeave = function () {
-      _this.setHelpTextVisible(false);
+      _this2.setHelpTextVisible(false);
     };
 
     this.shouldComponentUpdate = _reactAddonsPureRenderMixin2['default'].shouldComponentUpdate.bind(this);
@@ -157,7 +223,7 @@ var IconButton = (function (_Component2) {
   _createClass(IconButton, [{
     key: 'setHelpTextVisible',
     value: function setHelpTextVisible(visible) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (visible) {
         if (this.helpTextTimer) {
@@ -165,7 +231,7 @@ var IconButton = (function (_Component2) {
         }
 
         this.helpTextTimer = setTimeout(function () {
-          _this2.setState({ isHelpTextVisible: true });
+          _this3.setState({ isHelpTextVisible: true });
         }, this.props.helpTextTime);
       } else {
         if (this.helpTextTimer) {
