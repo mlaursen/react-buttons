@@ -83,7 +83,7 @@ This is just a basic button that helps with placing icons on a button before or 
     onClick: PropTypes.func,
     children: PropTypes.node,
     ripple: PropTypes.bool,
-    rippleTime: PropTypes.number,
+    rippleDuration: PropTypes.number,
   }
 
   static defaultProps = {
@@ -91,7 +91,7 @@ This is just a basic button that helps with placing icons on a button before or 
     type: 'button',
     onClick: () => {},
     ripple: false,
-    rippleTime: 300,
+    rippleDuration: 300,
   }
 ```
 
@@ -116,6 +116,7 @@ should be doing.
     helpTextTime: PropTypes.number,
     onClick: PropTypes.func,
     className: PropTypes.string,
+    ripple: PropTypes.bool,
     children: PropTypes.node,
   }
 
@@ -124,6 +125,7 @@ should be doing.
     type: 'button',
     helpTextTime: 1000,
     onClick: () => {},
+    ripple: false,
   }
 ```
 
