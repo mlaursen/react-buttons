@@ -3,13 +3,62 @@ import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 
+/**
+ * Initializes a ripple effect for a button
+ *
+ * @param button a dom element to insert the ripple into as html
+ * @param effectName the ripple effect's name. Defaults to 'ripple-effect'
+ * @return the ripple DOM element
+ */
+export function initRipple(button, effectName = 'ripple-effect') {
+  const size = Math.max(button.offsetHeight, button.offsetWidth) + 'px';
+
+  const ripple = document.createElement('span');
+  ripple.classList.add(effectName);
+  ripple.style.height = size;
+  ripple.style.width = size;
+
+  button.insertBefore(ripple, button.firstChild);
+
+  return ripple;
+}
+
+/**
+ * Animates the ripple effect by taking the click event, the button, and the ripple.
+ *
+ * @param e the click event
+ * @param button the button that was clicked
+ * @param ripple the ripple element
+ * @param rippleTimeout the timeout used for the click event
+ * @param rippleDuration? the duration of the ripple effect. Defaults to 300
+ * @return the updated rippleTimeout
+ */
+export function animateRipple(e, button, ripple, rippleTimeout, rippleDuration = 300) {
+  if(rippleTimeout) {
+    ripple.classList.remove('active');
+  }
+
+  const x = e.pageX - button.offsetLeft - ripple.offsetWidth / 2;
+  const y = e.pageY - button.offsetTop - ripple.offsetHeight / 2;
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+
+  ripple.classList.add('active');
+  rippleTimeout = setTimeout(() => {
+    ripple.classList.remove('active');
+    rippleTimeout = null;
+  }, rippleDuration);
+
+  return rippleTimeout;
+}
+
 export class Button extends Component {
   constructor(props) {
     super(props);
 
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-    this.rippleEffect = null;
     this.ripple = null;
+    this.rippleTimeout = null;
   }
 
   static propTypes = {
@@ -21,7 +70,7 @@ export class Button extends Component {
     onClick: PropTypes.func,
     children: PropTypes.node,
     ripple: PropTypes.bool,
-    rippleTime: PropTypes.number,
+    rippleDuration: PropTypes.number,
   }
 
   static defaultProps = {
@@ -29,7 +78,7 @@ export class Button extends Component {
     type: 'button',
     onClick: () => {},
     ripple: false,
-    rippleTime: 300,
+    rippleDuration: 300,
   }
 
   onClick = (e) => {
@@ -38,42 +87,18 @@ export class Button extends Component {
       return;
     }
 
-    const button = ReactDOM.findDOMNode(this)
-
-    if(this.rippleEffect) {
-      this.ripple.classList.remove('active');
-    }
-
-    const x = e.pageX - button.offsetLeft - this.ripple.offsetWidth / 2;
-    const y = e.pageY - button.offsetTop - this.ripple.offsetHeight / 2;
-
-    this.ripple.style.top = y + 'px';
-    this.ripple.style.left = x + 'px';
-    this.ripple.classList.add('active');
-    this.rippleEffect = setTimeout(() => {
-      this.ripple.classList.remove('active');
-      this.rippleEffect = null;
-    }, this.props.rippleTime);
+    this.rippleTimeout = animateRipple(e, ReactDOM.findDOMNode(this), this.ripple, this.rippleTimeout, this.props.rippleDuration);
   }
 
   componentDidMount() {
     if(this.props.ripple) {
-      const button = ReactDOM.findDOMNode(this);
-      const size = Math.max(button.offsetHeight, button.offsetWidth) + 'px';
-
-      const ripple = document.createElement('span');
-      ripple.classList.add('ripple-effect');
-      ripple.style.height = size;
-      ripple.style.width = size;
-
-      button.insertBefore(ripple, button.firstChild);
-      this.ripple = ripple;
+      this.ripple = initRipple(ReactDOM.findDOMNode(this));
     }
   }
 
   componentWillUnmount() {
-    if(this.rippleEffect) {
-      clearTimeout(this.rippleEffect);
+    if(this.rippleTimeout) {
+      clearTimeout(this.rippleTimeout);
     }
   }
 
@@ -93,11 +118,9 @@ export class Button extends Component {
 
     return (
       <button {...props} className={cn} onClick={this.onClick}>
-        <div>
-          {iconBefore && icon}
-          {this.props.children}
-          {!iconBefore && icon}
-        </div>
+        {iconBefore && icon}
+        {this.props.children}
+        {!iconBefore && icon}
       </button>
     );
   }
@@ -129,6 +152,7 @@ export class IconButton extends Component {
     helpTextTime: PropTypes.number,
     onClick: PropTypes.func,
     className: PropTypes.string,
+    ripple: PropTypes.bool,
     children: PropTypes.node,
   }
 
@@ -137,6 +161,7 @@ export class IconButton extends Component {
     type: 'button',
     helpTextTime: 1000,
     onClick: () => {},
+    ripple: false,
   }
 
   handleClick = (e) => {
@@ -196,23 +221,20 @@ export class IconButton extends Component {
       onBlur: this.removeTabFocus,
       onMouseOver: this.handleMouseOver,
       onMouseLeave: this.handleMouseLeave,
+      faIcon: this.props.faIcon,
+      materialIcon: this.props.materialIcon,
+      ripple: this.props.ripple,
     };
 
-    let icon = this.props.children;
-    if(this.props.faIcon) {
-      icon = <i className={`fa fa-${this.props.faIcon}`} />;
-    } else if(this.props.materialIcon) {
-      icon = <i className="material-icons">{this.props.materialIcon}</i>
-    }
     return (
-      <button {...buttonProps}>
-        {icon}
+      <Button {...buttonProps}>
+        {this.props.children}
         {isHelpTextVisible &&
           <div key="help-text" className={`help-text-${this.props.helpPosition}`}>
             {this.props.label}
           </div>
         }
-      </button>
+      </Button>
     );
   }
 }
