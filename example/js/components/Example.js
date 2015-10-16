@@ -75,7 +75,7 @@ export default class Example extends Component {
             <Button faIcon="users">Hello, World!</Button>
             <a href="#" className="icon-text-btn"><i className="icon fa fa-users" />Hello, world!</a>
             <FlatButton {...FLAT_BTN_PROPS[this.state.flatBtnPropsIndex]} onClick={this.nextFlatBtn}>Click for other props</FlatButton>
-            <FlatButton color="primary" ripple={true}>Click for other props</FlatButton>
+            <FlatButton color="primary" ripple={true}>Click for a ripple effect</FlatButton>
             <IconButton {...ICON_BTN_PROPS[this.state.iconBtnPropsIndex]} onClick={this.nextIconBtn} />
             <HamburgerButton active={isHamburgerActive[0]} onClick={this.toggleHamburger.bind(this, 0)} size="sm" label="Boop" />
             <HamburgerButton active={isHamburgerActive[1]} onClick={this.toggleHamburger.bind(this, 1)} label="Boop" />

@@ -58,23 +58,12 @@
   z-index: 8;
 }
 
-.icon-text-btn > div {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: nowrap;
-      -ms-flex-wrap: nowrap;
-          flex-wrap: nowrap;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
 .icon-text-btn .icon + span,
 .icon-text-btn span + .icon {
   margin-left: 0.5em;
+}
+.icon-text-btn .material-icons {
+  vertical-align: middle;
 }
 
 .flat-btn {

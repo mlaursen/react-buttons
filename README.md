@@ -247,6 +247,44 @@ There is no mixin for this one because it is easy enough to create your own here
 There is a reusable relative menu named `.floating-box`. View `src/scss/_helpers.scss` for more.
 
 
+### Helper functions
+
+There are 2 helper functions for creating ripple effects if you do not want to use the buttons here.
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { initRipple, animateRipple } from 'react-buttons';
+
+export default class RippleButton extends Component {
+  constructor(pros) {
+    super(props);
+
+    this.ripple = null;
+    this.rippleTimeout = null;
+  }
+
+  componentDidMount() {
+    this.ripple = initRipple(ReactDOM.findDOMNode(this));
+  }
+
+  componentWillUnmount() {
+    if(this.rippleTimeout) {
+      clearTimeout(this.rippleTimeout);
+    }
+  }
+
+  onClick = (e) => {
+    this.rippleTimeout = animateRipple(e, ReactDOM.findDOMNode(this), this.ripple, this.rippleTimeout);
+  }
+
+  render() {
+    return <button type="button" onClick={this.onClick}>I Am a Ripple Button</button>;
+  }
+}
+```
+
+
 ### Development
 
 To run the local build and check for changes in the examples,

@@ -8,7 +8,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x3, _x4, _x5) { var _again = true; _function: while (_again) { var object = _x3, property = _x4, receiver = _x5; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x3 = parent; _x4 = property; _x5 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+exports.initRipple = initRipple;
+exports.animateRipple = animateRipple;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -36,6 +39,61 @@ var _classnames2 = require('classnames');
 
 var _classnames3 = _interopRequireDefault(_classnames2);
 
+/**
+ * Initializes a ripple effect for a button
+ *
+ * @param button a dom element to insert the ripple into as html
+ * @param effectName the ripple effect's name. Defaults to 'ripple-effect'
+ * @return the ripple DOM element
+ */
+
+function initRipple(button) {
+  var effectName = arguments.length <= 1 || arguments[1] === undefined ? 'ripple-effect' : arguments[1];
+
+  var size = Math.max(button.offsetHeight, button.offsetWidth) + 'px';
+
+  var ripple = document.createElement('span');
+  ripple.classList.add(effectName);
+  ripple.style.height = size;
+  ripple.style.width = size;
+
+  button.insertBefore(ripple, button.firstChild);
+
+  return ripple;
+}
+
+/**
+ * Animates the ripple effect by taking the click event, the button, and the ripple.
+ *
+ * @param e the click event
+ * @param button the button that was clicked
+ * @param ripple the ripple element
+ * @param rippleTimeout the timeout used for the click event
+ * @param rippleDuration? the duration of the ripple effect. Defaults to 300
+ * @return the updated rippleTimeout
+ */
+
+function animateRipple(e, button, ripple, rippleTimeout) {
+  var rippleDuration = arguments.length <= 4 || arguments[4] === undefined ? 300 : arguments[4];
+
+  if (rippleTimeout) {
+    ripple.classList.remove('active');
+  }
+
+  var x = e.pageX - button.offsetLeft - ripple.offsetWidth / 2;
+  var y = e.pageY - button.offsetTop - ripple.offsetHeight / 2;
+  ripple.style.left = x + 'px';
+  ripple.style.top = y + 'px';
+
+  ripple.classList.add('active');
+  rippleTimeout = setTimeout(function () {
+    ripple.classList.remove('active');
+    rippleTimeout = null;
+  }, rippleDuration);
+
+  return rippleTimeout;
+}
+
 var Button = (function (_Component) {
   _inherits(Button, _Component);
 
@@ -52,50 +110,26 @@ var Button = (function (_Component) {
         return;
       }
 
-      var button = _reactDom2['default'].findDOMNode(_this);
-
-      if (_this.rippleEffect) {
-        _this.ripple.classList.remove('active');
-      }
-
-      var x = e.pageX - button.offsetLeft - _this.ripple.offsetWidth / 2;
-      var y = e.pageY - button.offsetTop - _this.ripple.offsetHeight / 2;
-
-      _this.ripple.style.top = y + 'px';
-      _this.ripple.style.left = x + 'px';
-      _this.ripple.classList.add('active');
-      _this.rippleEffect = setTimeout(function () {
-        _this.ripple.classList.remove('active');
-        _this.rippleEffect = null;
-      }, _this.props.rippleTime);
+      _this.rippleTimeout = animateRipple(e, _reactDom2['default'].findDOMNode(_this), _this.ripple, _this.rippleTimeout, _this.props.rippleDuration);
     };
 
     this.shouldComponentUpdate = _reactAddonsPureRenderMixin2['default'].shouldComponentUpdate.bind(this);
-    this.rippleEffect = null;
     this.ripple = null;
+    this.rippleTimeout = null;
   }
 
   _createClass(Button, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       if (this.props.ripple) {
-        var button = _reactDom2['default'].findDOMNode(this);
-        var size = Math.max(button.offsetHeight, button.offsetWidth) + 'px';
-
-        var ripple = document.createElement('span');
-        ripple.classList.add('ripple-effect');
-        ripple.style.height = size;
-        ripple.style.width = size;
-
-        button.insertBefore(ripple, button.firstChild);
-        this.ripple = ripple;
+        this.ripple = initRipple(_reactDom2['default'].findDOMNode(this));
       }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      if (this.rippleEffect) {
-        clearTimeout(this.rippleEffect);
+      if (this.rippleTimeout) {
+        clearTimeout(this.rippleTimeout);
       }
     }
   }, {
@@ -129,13 +163,9 @@ var Button = (function (_Component) {
       return _react2['default'].createElement(
         'button',
         _extends({}, props, { className: cn, onClick: this.onClick }),
-        _react2['default'].createElement(
-          'div',
-          null,
-          iconBefore && icon,
-          this.props.children,
-          !iconBefore && icon
-        )
+        iconBefore && icon,
+        this.props.children,
+        !iconBefore && icon
       );
     }
   }], [{
@@ -149,7 +179,7 @@ var Button = (function (_Component) {
       onClick: _react.PropTypes.func,
       children: _react.PropTypes.node,
       ripple: _react.PropTypes.bool,
-      rippleTime: _react.PropTypes.number
+      rippleDuration: _react.PropTypes.number
     },
     enumerable: true
   }, {
@@ -159,7 +189,7 @@ var Button = (function (_Component) {
       type: 'button',
       onClick: function onClick() {},
       ripple: false,
-      rippleTime: 300
+      rippleDuration: 300
     },
     enumerable: true
   }]);
@@ -258,23 +288,16 @@ var IconButton = (function (_Component2) {
         onKeyUp: this.handleKeyUp,
         onBlur: this.removeTabFocus,
         onMouseOver: this.handleMouseOver,
-        onMouseLeave: this.handleMouseLeave
+        onMouseLeave: this.handleMouseLeave,
+        faIcon: this.props.faIcon,
+        materialIcon: this.props.materialIcon,
+        ripple: this.props.ripple
       };
 
-      var icon = this.props.children;
-      if (this.props.faIcon) {
-        icon = _react2['default'].createElement('i', { className: 'fa fa-' + this.props.faIcon });
-      } else if (this.props.materialIcon) {
-        icon = _react2['default'].createElement(
-          'i',
-          { className: 'material-icons' },
-          this.props.materialIcon
-        );
-      }
       return _react2['default'].createElement(
-        'button',
+        Button,
         buttonProps,
-        icon,
+        this.props.children,
         isHelpTextVisible && _react2['default'].createElement(
           'div',
           { key: 'help-text', className: 'help-text-' + this.props.helpPosition },
@@ -293,6 +316,7 @@ var IconButton = (function (_Component2) {
       helpTextTime: _react.PropTypes.number,
       onClick: _react.PropTypes.func,
       className: _react.PropTypes.string,
+      ripple: _react.PropTypes.bool,
       children: _react.PropTypes.node
     },
     enumerable: true
@@ -302,7 +326,8 @@ var IconButton = (function (_Component2) {
       helpPosition: 'bottom',
       type: 'button',
       helpTextTime: 1000,
-      onClick: function onClick() {}
+      onClick: function onClick() {},
+      ripple: false
     },
     enumerable: true
   }]);
